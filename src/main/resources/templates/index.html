@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Autonomous Claims Processing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #f4f6f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 60px auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+        text-align: center;
+        color: #1f2937;
+        margin-bottom: 10px;
+    }
+
+    p.subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 30px;
+    }
+
+    .upload-box {
+        border: 2px dashed #cbd5e1;
+        padding: 30px;
+        border-radius: 8px;
+        text-align: center;
+        background: #f9fafb;
+    }
+
+    .upload-box input {
+        margin-top: 15px;
+    }
+
+    button {
+        background: #2563eb;
+        color: #fff;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
+
+    .output {
+        margin-top: 30px;
+        background: #0f172a;
+        color: #e5e7eb;
+        padding: 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-size: 14px;
+    }
+
+    .loading {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
+        color: #2563eb;
+        font-weight: 600;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Autonomous Claims Processing Agent</h1>
+    <p class="subtitle">Upload FNOL (First Notice of Loss) PDF to auto-classify claims</p>
+
+    <div class="upload-box">
+        <strong>Select FNOL PDF File</strong><br>
+        <input type="file" id="file" accept="application/pdf">
+        <br>
+        <button onclick="uploadPdf()">Process Claim</button>
+    </div>
+
+    <div class="loading" id="loading">
+        Processing PDF, please wait...
+    </div>
+
+    <pre class="output" id="output"></pre>
+</div>
+
+<script>
+function uploadPdf() {
+
+    const fileInput = document.getElementById("file");
+    const output = document.getElementById("output");
+    const loading = document.getElementById("loading");
+
+    if (!fileInput.files.length) {
+        alert("Please select a PDF file.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", fileInput.files[0]);
+
+    output.textContent = "";
+    loading.style.display = "block";
+
+    fetch("/upload", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        loading.style.display = "none";
+        output.textContent = JSON.stringify(data, null, 2);
+    })
+    .catch(err => {
+        loading.style.display = "none";
+        output.textContent = "Error processing PDF.";
+    });
+}
+</script>
+
+</body>
+</html>
