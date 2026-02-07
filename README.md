@@ -16,7 +16,7 @@ Business rule–based routing
 
 REST API testing
 
-🛠️ Tech Stack
+----🛠️ Tech Stack ---
 
 Java 17
 
@@ -28,7 +28,7 @@ Spring Web (REST API)
 
 Postman (for testing)
 
-MySQL (optional, not required for routing demo)
+MySQL 
 
 📂 Project Structure
 src/main/java/com/example/demo
@@ -37,7 +37,7 @@ src/main/java/com/example/demo
  ├── service
  │    └── ClaimService.java
  └── DemoApplication.java
-
+------------------------------------------------------------------------------------------
 📥 Input
 
 Input is a PDF file
@@ -55,7 +55,7 @@ RAMESH
 DATE OF LOSS
 05/02/2026
 
-
+--------------------------------------------
  Note:(i implemented the text based pdf)
 ACORD FNOL form PDFs are protected and do not expose values programmatically.
 Therefore, text-based PDFs were used for extraction and testing.
@@ -87,7 +87,7 @@ Example:
     "claimType": "auto"
   }
 }
-
+--------------------------------------------------
 🧾 Fields Extracted
 Policy Information
 
@@ -99,7 +99,7 @@ Incident Information
 
 Date of Loss
 
-Time of Loss (optional)
+Time of Loss
 
 Location of Loss
 
@@ -168,7 +168,7 @@ If estimated damage < ₹25,000
  Backend Testing Scenarios
 
 Each routing rule was tested using a separate PDF file.
-
+------------------------
  Scenario 1: Manual Review (Missing Fields)
 
 PDF Input
@@ -183,11 +183,9 @@ RAMESH
 Result
 
 recommendedRoute = Manual Review
-
-
 Reason
 Missing mandatory fields.
-
+---------------------------------------------------
  Scenario 2: Fast-track (Low Damage)
 
 PDF Input
@@ -215,7 +213,7 @@ recommendedRoute = Fast-track
 
 Reason
 Estimated damage below ₹25,000.
-
+----------------------------------------------------------
 Scenario 3: Specialist Queue (Injury Claim)
 
 PDF Input
@@ -246,7 +244,7 @@ recommendedRoute = Specialist Queue
 
 Reason
 Claim involves injury.
-
+-------------------------------------------------------------------
  Scenario 4: Investigation Flag (Fraud Detection)
 
 PDF Input
@@ -277,7 +275,7 @@ recommendedRoute = Investigation Flag
 
 Reason
 Fraud-related keywords detected.
-
+---------------------------------------------------------------------------
 🔧 API Details
 Upload Claim PDF
 
